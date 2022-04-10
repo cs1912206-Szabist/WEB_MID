@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta>
+	<title>@model.title</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<!-- <link rel='stylesheet' href='/stylesheets/tpl_style.css' /> -->
+
+<!-- 
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" /> -->
+	<script type="text/javascript" src="/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+      
+        $(document).ready(function () {
+          
+
+            $('.pbk').keypress(function (e) {
+                if (e.which === 13) {
+    
+                    getTitle()
+                }
+            })
+        });
+        const getTitle = () => {
+            let title = $('#search').val();
+				$('body > table > tbody > tr > td:nth-child(1) > div > div').empty();
+
+            $.ajax({
+                url: `/singledata/${title}`
+            }).then(function (movies) {
+                console.log(movies);
+$.each(movies, function (mi, movie) {				
+	const td = `
+					<a href="#!" title=${movie.title} tid=${movie.tid} rent="30" class="title" rented="false">
+									<img width="194px" height="252px" src="images/${movie.image}">
+									<div class="item-status" style="display: none;">Issued</div>
+									<div class="item-title">${movie.title}
+										<br>
+										<span class="textWhite">${movie.episode}</span>
+									</div>
+								</a>
+				`
+				$('body > table > tbody > tr > td:nth-child(1) > div > div').append(td);
+})
+                $('div.card').show();
+            })
+        }
+
+
+$.ajax({
+     url: `/display/titles/`
+            }).then(function (mov) {
+                console.log(mov);
+$.each(mov, function (mi, mov) {				
+	const td = `
+					<a href="#!" title=${mov.title} tid=${mov.tid} rent=${mov.rent} class=${mov.class} rented="false">
+									<img width="194px" height="252px" src="images/${mov.image}">
+									<div class="item-status" style="display: none;">Issued</div>
+									<div class="item-title">${mov.title}
+										<br>
+										<span class="textWhite">${mov.episode}</span>
+									</div>
+								</a>
+				`
+				$('body > table > tbody > tr > td:nth-child(1) > div > div').append(td);
+})
+                $('div.card').show();
+            })
+        
+
+
+
+
+			
+
+
+
+       
+       
+
+    </script>
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-light justify-content-between" style="background-color: #e3f2fd;">
+		<div class="col hdr">
+			<input class="form-control pbk" type="text" id="search" placeholder="Search" aria-label="Search">
+		</div>
+		<div class="col hdr" style="text-align: right ;">
+			<a href="#!" class="navbar-brand" id="issue">Issue</a>
+			<a href="#!" class="navbar-brand link">Store(0)</a>
+		</div>	
+
+	</nav>
+
+	<table style="width: 100%;">
+		<tbody><tr>
+			<td style="width: 85%; vertical-align: top; ">
+				<div class="scrollable">
+					<div class="items">
+					</div>
+				</div>
+			</td>
+			<td style="vertical-align: top; text-align: center;">
+				<div id="store">
+					<div style="padding: 10px; font-size: 20px;">Amount:<span id="amt">30</span></div>
+				
+						<div class="store">
+							<img src="images/25715411155.jpg" height="150px" title=""><br>
+							<input type="number" class="discount" name="discount" tid="213" value="0" style="width: 35px;">
+							<span>Rent : </span><span class="rent" id="r-213" rent="30" style="width: 35px;">30</span>
+						</div></div>
+			</td>
+		</tr>
+	</tbody></table>
+	
+
+	
+
+
+
+
+</body>
+
+</html>
